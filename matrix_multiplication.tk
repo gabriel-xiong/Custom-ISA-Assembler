@@ -1,0 +1,40 @@
+; r1 = square size, r2 = # of total items to read, r3 = current number,
+; r4 = # of items read thus far, r6 = inputLoop, r10 = memory counter
+.code
+    clr r1
+	in r1, r0
+    clr r4
+    mul r2, r1, r1
+    add r2, r2, r2
+    ld r6, :inputLoop 
+    ld r10, 65536 
+:inputLoop
+    in r3, r0
+	mov (r10)(0), r3
+	addi r10, 8
+	addi r4, 1
+	brgt r6, r2, r4
+; r7 = row counter, r8 = col counter, r9 = dot product counter, r11 = rowLoop, 
+; r12 = colLoop, r13 = dotProdLoop
+	clr r7
+	clr r8
+	clr r9 
+	ld r11, :rowLoop 
+	ld r12, :colLoop
+	ld r13, :dotProdLoop
+:rowLoop
+
+:colLoop 
+	clr r9 
+:dotProdLoop 
+
+	addi r9, 1
+	brgt r13, r1, r9
+	; dot product done 
+	addi r8, 1
+	brgt r12, r1, r8
+	; col done 
+	clr r8
+	addi r7, 1
+	brgt r11, r1, r7
+	; row done 

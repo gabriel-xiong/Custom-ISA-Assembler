@@ -1,0 +1,35 @@
+; r1, r2 = previous fibonacci numbers. r3 = current fib number. r4 = desired fib number
+; r5 = go to end; r6 = check for n = 1, r7 = start of loop, r10 = temp storage, r15 = output
+.code
+	in r4, r0
+; load desired fibonacci number into r4
+	clr r1
+	clr r2
+	addi r2, 1
+; initialize first two numbers 
+	clr r3
+	addi r3, 2
+	ld r5, :end
+	clr r6 
+	addi r6, 2  
+	brgt r5, r6, r4 
+	mov r15, r1
+; go to r5 
+	ld r7, :repeat
+:repeat
+	add r10, r1, r2 
+; calculate next sequence 
+	mov r1, r2 
+	mov r2, r10
+	addi r3, 1
+	brgt r7, r4, r3 
+; restart loop 
+	mov r15, r10 
+; load answer into output 
+:end
+	clr r20
+	addi r20, 1
+	out r20, r15 
+	halt
+
+
