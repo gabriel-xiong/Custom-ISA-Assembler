@@ -38,3 +38,4 @@
 	addi r7, 1
 	brgt r11, r1, r7
 	; row done 
+	halt
