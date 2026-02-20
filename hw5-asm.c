@@ -752,12 +752,12 @@ void buildLabelTable(FILE* input, memoryLabels* labels, int* numLabels)
         {   
             
            strcpy(labelsToBeAdded[stillLeft++], line);
-           if (strncmp(mode, "code", 4) == 0)  
-              continue; 
-           else if (strncmp(mode, "data", 4) == 0)
-              continue; 
-           else
-                error("faulty label");
+        //    if (strncmp(mode, "code", 4) == 0)  
+        //       continue; 
+        //    else if (strncmp(mode, "data", 4) == 0)
+        //       continue; 
+        //    else
+        //         error("faulty label");
           
         }
         else // error 
@@ -776,6 +776,8 @@ void buildLabelTable(FILE* input, memoryLabels* labels, int* numLabels)
             handleLabel(labelsToBeAdded[i], labels, numLabels, codeAddress);
         else if (strncmp(mode, "data", 4) == 0)
             handleLabel(labelsToBeAdded[i], labels, numLabels, dataAddress);
+        else 
+            error("faulty label");
     }
 
     stillLeft = 0;
