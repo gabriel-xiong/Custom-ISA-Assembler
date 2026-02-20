@@ -1,0 +1,12 @@
+; reference non-existent label 
+.code 
+    clr r0
+	ld r5, :L1
+	br r5
+.data 
+    :L2
+    clr r1
+	ld r9, 100 
+	br r5
+.code
+    halt 

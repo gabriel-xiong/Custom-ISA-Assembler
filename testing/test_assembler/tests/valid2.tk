@@ -1,0 +1,9 @@
+.code
+	return
+.data 
+	11
+	123
+.code 
+	clr r0 
+; this should be skipped
+	halt

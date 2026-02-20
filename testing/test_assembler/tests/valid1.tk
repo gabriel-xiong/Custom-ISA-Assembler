@@ -1,0 +1,7 @@
+.code
+	clr r0
+	ld r5, :L1
+	br r5
+.code
+:L1
+	halt
