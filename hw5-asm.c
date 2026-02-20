@@ -702,7 +702,6 @@ void buildLabelTable(FILE* input, memoryLabels* labels, int* numLabels)
 
     while (fgets(line, sizeof(line), input)) {
          
-
         line[strcspn(line, "\n")] = '\0';
            
         if (strlen(line) == 0 || line[0] == ';') 
@@ -765,6 +764,16 @@ void buildLabelTable(FILE* input, memoryLabels* labels, int* numLabels)
             
         }
     }
+
+    for (int i = 0; i < stillLeft; i++) {
+        if (strncmp(mode, "code", 4) == 0)
+            handleLabel(labelsToBeAdded[i], labels, numLabels, codeAddress);
+        else if (strncmp(mode, "data", 4) == 0)
+            handleLabel(labelsToBeAdded[i], labels, numLabels, dataAddress);
+    }
+
+    stillLeft = 0;
+    
     if (!encounteredCodeBlock)
     {
         error("Error: no code block encountered\n");
