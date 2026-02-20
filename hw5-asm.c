@@ -708,12 +708,18 @@ void buildLabelTable(FILE* input, memoryLabels* labels, int* numLabels)
             continue;
 
         if (strncmp(line, ".code", 5) == 0) {
+        for (int i = 0; i < stillLeft; i++)
+            handleLabel(labelsToBeAdded[i], labels, numLabels, codeAddress);
             strcpy(mode, "code");
+             stillLeft = 0;
             encounteredCodeBlock = 1;
             continue;
         }
         else if (strncmp(line, ".data", 5) == 0)
-        {   strcpy(mode, "data");
+        {   for (int i = 0; i < stillLeft; i++)
+                handleLabel(labelsToBeAdded[i], labels, numLabels, dataAddress);
+             stillLeft = 0;
+            strcpy(mode, "data");
             continue;
 
         }
@@ -773,7 +779,7 @@ void buildLabelTable(FILE* input, memoryLabels* labels, int* numLabels)
     }
 
     stillLeft = 0;
-    
+
     if (!encounteredCodeBlock)
     {
         error("Error: no code block encountered\n");
