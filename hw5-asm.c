@@ -100,6 +100,9 @@ typedef struct
     int canUseSign; 
 } Requirements; 
 
+char labelsToBeAdded [512][256]; 
+int stillLeft = 0; 
+
 Requirements requirementTable[] = 
 {
     {"add", 0x18, 3, 0, 0},
@@ -720,10 +723,17 @@ void buildLabelTable(FILE* input, memoryLabels* labels, int* numLabels)
             // check data mode 
             if (strncmp(mode, "data", 4) == 0)
             {   
+               for (int i = 0; i < stillLeft; i++)
+                  handleLabel(labelsToBeAdded[i], labels, numLabels, dataAddress);
+                stillLeft = 0; 
                 dataAddress += 8; 
             }
             else if (strncmp(mode, "code", 4) == 0) // check code mode 
-            {   if (isMacro(line))
+            {    for (int i = 0; i < stillLeft; i++)
+                  handleLabel(labelsToBeAdded[i], labels, numLabels, codeAddress);
+                
+                  stillLeft =0; 
+                if (isMacro(line))
                     codeAddress += 4 * getNumInstructions(line); 
                 else 
                     codeAddress += 4; 
@@ -734,15 +744,16 @@ void buildLabelTable(FILE* input, memoryLabels* labels, int* numLabels)
             }
         }
         else if (line[0] == ':')   // handle label case 
-        {     
-             
-
-            if (strncmp(mode, "code", 4) == 0)
-               handleLabel(line, labels, numLabels, codeAddress);
-            else  if (strncmp(mode, "data", 4) == 0)
-               handleLabel(line, labels, numLabels, dataAddress);
-            else
+        {   
+            
+           strcpy(labelsToBeAdded[stillLeft++], line);
+           if (strncmp(mode, "code", 4) == 0)  
+              continue; 
+           else if (strncmp(mode, "data", 4) == 0)
+              continue; 
+           else
                 error("faulty label");
+          
         }
         else // error 
          {  // printf("%s", mode);
