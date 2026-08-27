@@ -1,17 +1,16 @@
-Gabriel Xiong
-gx566
+# Custom ISA Assembler & CPU Simulator
 
-How to run simulator/assembler:
+An end-to-end C toolchain for a custom 32-register instruction set architecture. The project translates assembly programs into executable binaries and runs them on a software CPU simulator.
 
-gcc -o hw5-asm hw5-asm.c
-gcc -o hw5-sim hw5-sim.c
-./hw5-asm <input.tk> <output.tko>
-./hw5-sim <input.tko>
+### Features
 
-How to run tests: 
+* Two-pass assembler with label resolution and pseudo-instruction expansion
+* ~30 instruction types covering arithmetic, branching, memory access, stack operations, and I/O
+* 32-bit instruction encoding with 32 64-bit registers
+* 512 KiB simulated memory
+* Fetch/decode/execute CPU loop with function-pointer instruction dispatch
+* Integer and floating-point execution
 
-cd testing/test_tinker_files
-chmod +x *.sh
-./test_binary_search.sh
-./test_fibonacci.sh
-./test_matrix.sh
+### Example
+
+The repository includes a Fibonacci program written in the custom assembly language that exercises input, branching, arithmetic, and output.
