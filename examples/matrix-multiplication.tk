@@ -1,0 +1,66 @@
+; Multiply two square matrices stored as IEEE 754 bit patterns.
+; r1 = matrix size, r2 = total input values, r3 = current value
+; r4 = values read, r10 = memory pointer
+.code
+	clr r1
+	in r1, r0
+	clr r4
+	mul r2, r1, r1
+	add r2, r2, r2
+	ld r6, :inputLoop
+	ld r10, 65536
+	ld r22, 8
+:inputLoop
+	in r3, r0
+	mov (r10)(0), r3
+	addi r10, 8
+	addi r4, 1
+	brgt r6, r2, r4
+; r7 = row, r8 = column, r9 = dot-product index
+; r14/r15 = element addresses, r16/r17 = element values
+	clr r7
+	clr r8
+	clr r9
+	ld r25, 1
+	ld r11, :rowLoop
+	ld r12, :colLoop
+	ld r13, :dotProdLoop
+:rowLoop
+:colLoop
+	clr r9
+	clr r24
+:dotProdLoop
+	clr r14
+	clr r15
+	ld r14, 65536
+	ld r15, 65536
+; Load A[row][index].
+	mul r20, r7, r1
+	add r20, r20, r9
+	mul r20, r20, r22
+	add r14, r14, r20
+	mov r16, (r14)(0)
+; Load B[index][column].
+	clr r20
+	mul r20, r1, r1
+	mul r20, r20, r22
+	add r15, r15, r20
+	clr r20
+	clr r21
+	mul r20, r1, r9
+	add r20, r20, r8
+	mul r20, r20, r22
+	add r15, r15, r20
+	mov r17, (r15)(0)
+; Accumulate the dot product.
+	mulf r23, r16, r17
+	addf r24, r24, r23
+	addi r9, 1
+	brgt r13, r1, r9
+	out r25, r24
+	addi r8, 1
+	brgt r12, r1, r8
+	clr r8
+	addi r7, 1
+	brgt r11, r1, r7
+	halt

@@ -1,6 +1,0 @@
-.code
-	halt
-:L0
-.data
-	1
-:L1

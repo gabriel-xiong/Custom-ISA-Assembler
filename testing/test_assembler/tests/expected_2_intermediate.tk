@@ -1,8 +1,0 @@
-.code
-	return
-.data
-	11
-	123
-.code
-	xor r0, r0, r0
-	priv r0, r0, r0, 0

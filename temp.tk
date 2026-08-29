@@ -1,4 +1,0 @@
-.code
-	priv r0, r0, r0, 0
-.data
-	1

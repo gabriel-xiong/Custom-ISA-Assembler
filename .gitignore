@@ -1,0 +1,18 @@
+# Compiled programs and object files
+tinker-asm
+tinker-sim
+*.exe
+*.o
+
+# Assembler and simulator output
+*.tko
+temp.tk
+debug.txt
+trace.txt
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
